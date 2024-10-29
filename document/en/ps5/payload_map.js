@@ -68,7 +68,7 @@ const payload_map = [
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/websrv/releases",
         binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11543810644",
-        version: "0.11-1",
+        version: "0.14",
         toPort: 9021
     },
     {
@@ -78,7 +78,7 @@ const payload_map = [
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/ftpsrv",
         binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11543810644",
-        version: "0.10.2-1",
+        version: "0.11",
         toPort: 9021
     },
     {
@@ -88,7 +88,7 @@ const payload_map = [
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/klogsrv/releases",
         binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11543810644",
-        version: "0.4.1-1",
+        version: "0.5",
         toPort: 9021
     },
     {
@@ -98,7 +98,7 @@ const payload_map = [
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/shsrv/releases",
         binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11543810644",
-        version: "0.11-1",
+        version: "0.12",
         toPort: 9021
     },
     {
