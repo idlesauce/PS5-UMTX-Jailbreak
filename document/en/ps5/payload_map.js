@@ -46,9 +46,9 @@ const payload_map = [
         fileName: "byepervisor.elf",
         author: "SpecterDev, ChendoChap, flatz, fail0verflow, Znullptr, kiwidog, sleirsgoevy, EchoStretch",
         projectSource: "https://github.com/EchoStretch/Byepervisor",
-        binarySource: "https://github.com/EchoStretch/Byepervisor/actions/runs/11545292602",
-        version: "4655f86",
-        supportedFirmwares: ["1.12", "1.14", "2.00", "2.20", "2.25", "2.26", "2.30", "2.50"],
+        binarySource: "https://github.com/EchoStretch/Byepervisor/actions/runs/11638840901",
+        version: "3e28421",
+        supportedFirmwares: ["1.00", "1.01", "1.02", "1.05", "1.12", "1.14", "2.00", "2.20", "2.25", "2.26", "2.30", "2.50", "2.70"],
         toPort: 9021
     },
     {
