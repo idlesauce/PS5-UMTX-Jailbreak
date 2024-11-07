@@ -26,7 +26,7 @@ const payload_map = [
     //     fileName: "elfldr.elf",
     //     author: "john-tornblom",
     //     projectSource: "https://github.com/ps5-payload-dev/elfldr",
-    //     binarySource: "https://github.com/PS5Dev/PS5-UMTX-Jailbreak/blob/33ef329d6480bb7bed6aadc144ba222ea5d14bbf/document/en/ps5/payloads/elfldr.elf",
+    //     binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11597570082",
     //     version: "?",
     //     supportedFirmwares: ["1.", "2.", "3.", "4.", "5."]
     // },
@@ -46,9 +46,9 @@ const payload_map = [
         fileName: "byepervisor.elf",
         author: "SpecterDev, ChendoChap, flatz, fail0verflow, Znullptr, kiwidog, sleirsgoevy, EchoStretch",
         projectSource: "https://github.com/EchoStretch/Byepervisor",
-        binarySource: "https://github.com/EchoStretch/Byepervisor/actions/runs/11545292602",
-        version: "4655f86",
-        supportedFirmwares: ["1.12", "1.14", "2.00", "2.20", "2.25", "2.26", "2.30", "2.50"],
+        binarySource: "https://github.com/EchoStretch/Byepervisor/actions/runs/11643633918",
+        version: " 9f4ff48",
+        supportedFirmwares: ["1.00", "1.01", "1.02", "1.05", "1.12", "1.14", "2.00", "2.20", "2.25", "2.26", "2.30", "2.50", "2.70"],
         toPort: 9021
     },
     {
@@ -67,7 +67,7 @@ const payload_map = [
         fileName: "websrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/websrv/releases",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11543810644",
+        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11597570082",
         version: "0.14",
         toPort: 9021
     },
@@ -77,7 +77,7 @@ const payload_map = [
         fileName: "ftpsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/ftpsrv",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11543810644",
+        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11597570082",
         version: "0.11",
         toPort: 9021
     },
@@ -87,7 +87,7 @@ const payload_map = [
         fileName: "klogsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/klogsrv/releases",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11543810644",
+        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11597570082",
         version: "0.5",
         toPort: 9021
     },
@@ -97,7 +97,7 @@ const payload_map = [
         fileName: "shsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/shsrv/releases",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11543810644",
+        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11597570082",
         version: "0.12",
         toPort: 9021
     },
@@ -107,7 +107,7 @@ const payload_map = [
         fileName: "gdbsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/gdbsrv/releases",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11543810644",
+        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/11597570082",
         version: "0.4-1",
         toPort: 9021
     },
