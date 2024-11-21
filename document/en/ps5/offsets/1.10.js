@@ -386,4 +386,4 @@ const OFFSET_KERNEL_UTOKEN_FLAGS                = 0x07D81100; // data = 0x062411
 const OFFSET_KERNEL_PRISON0                     = 0x03451E00; // data = 0x01911E00
 const OFFSET_KERNEL_ROOTVNODE                   = 0x080A5540; // data = 0x06565540
 
-const OFFSET_KERNEL_PS4SDK						= 0x30E32C8;
+// const OFFSET_KERNEL_PS4SDK						= 0x30E32C8;
