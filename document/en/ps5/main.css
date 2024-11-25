@@ -129,10 +129,12 @@ a:focus {
     padding: 0;
     text-overflow: ellipsis;
     overflow: hidden;
-    white-space: nowrap;
     line-height: 1.5rem;
     font-size: 0.9rem;
     font-weight: normal;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
 }
 
 .btn:hover p.payload-btn-info {
@@ -207,6 +209,11 @@ a:focus {
     padding: 8px;
     margin: 8px;
     box-sizing: border-box;
+}
+
+.log:active, .log:focus {
+    outline: 0;
+    border: none;
 }
 
 .position-relative { position: relative;}
