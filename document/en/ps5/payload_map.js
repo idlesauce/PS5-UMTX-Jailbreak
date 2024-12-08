@@ -122,6 +122,16 @@ const payload_map = [
         supportedFirmwares: ["3.", "4."]
     },
     {
+        displayTitle: "ps5debug",
+        description: "Debugger, open source version by DizzRL",
+        fileName: "ps5debug_dizz.elf",
+        author: "Dizz, astrelsky, John Tornblom, SiSTR0, golden, idlesauce",
+        projectSource: "https://github.com/idlesauce/ps5debug",
+        binarySource: "https://github.com/idlesauce/ps5debug/releases/download/v0.0.1/ps5debug.elf",
+        version: "0.0.1",
+        toPort: 9021
+    },
+    {
         displayTitle: "ps5-versions",
         description: "Shows kernel build, os and sdk versions",
         fileName: "ps5-versions.elf",
