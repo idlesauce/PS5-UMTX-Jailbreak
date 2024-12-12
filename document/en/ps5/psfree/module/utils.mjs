@@ -29,9 +29,11 @@ export function die(msg='') {
 }
 
 const console = document.getElementById('console');
-export function debug_log(msg='') {
-    console.append(msg + '\n');
-}
+// export function debug_log(msg='') {
+//     console.append(msg + '\n');
+// }
+export const debug_log = print; 
+window.debug_log = debug_log;
 
 export function clear_log() {
     console.innerHTML = null;

@@ -30,7 +30,7 @@ async function run(wkonly = false, animate = true) {
         }
         if (wk_exploit_type == LOCALSTORE_WK_EXPLOIT_TYPE_VALUE_PSFREE) {
             debug_log("[+] running psfree for userland exploit...");
-            await run_psfree();
+            await run_psfree(fw_str);
         } else if (wk_exploit_type == LOCALSTORE_WK_EXPLOIT_TYPE_VALUE_FONTFACE) {
             debug_log("[+] running fontface for userland exploit...");
             await run_fontface();

