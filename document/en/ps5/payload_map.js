@@ -142,6 +142,16 @@ const payload_map = [
         supportedFirmwares: ["1.", "2.", "3.", "4."]
     },
     {
+        displayTitle: "ps5-remoteplay-get-pin",
+        description: "Get Remote Play PIN for offline activated users. Send again to cancel.",
+        fileName: "rp-get-pin.elf",
+        author: "idlesauce",
+        projectSource: "https://github.com/idlesauce/ps5-remoteplay-get-pin",
+        binarySource: "https://github.com/idlesauce/ps5-remoteplay-get-pin/releases/tag/v0.1",
+        version: "0.1",
+        toPort: 9021
+    },
+    {
         // https://github.com/Storm21CH/PS5_Browser_appCache_remove
         displayTitle: "Browser appcache remover",
         description: "Deletes for only the current user in webkit-only mode",
