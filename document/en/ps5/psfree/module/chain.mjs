@@ -1,4 +1,4 @@
-/* Copyright (C) 2023 anonymous
+/* Copyright (C) 2023-2024 anonymous
 
 This file is part of PSFree.
 
@@ -15,23 +15,23 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-import { Int } from './int64.js';
-import { get_view_vector } from './memtools.js';
-import { Addr, mem } from './mem.js';
+import { Int } from './int64.mjs';
+import { get_view_vector } from './memtools.mjs';
+import { Addr, mem } from './mem.mjs';
 
 import {
     read64,
     write64,
-} from './rw.js';
+} from './rw.mjs';
 
-import * as o from './offset.js';
+import * as o from './offset.mjs';
 
 // put the sycall names that you want to use here
 export const syscall_map = new Map(Object.entries({
-    'close': 6,
+    'close' : 6,
     'setuid' : 23,
     'getuid' : 24,
-    'mprotect': 74,
+    'mprotect' : 74,
     'socket' : 97,
     'fchmod' : 124,
     'mlock' : 203,

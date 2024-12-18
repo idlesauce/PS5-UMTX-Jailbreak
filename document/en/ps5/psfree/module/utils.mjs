@@ -1,4 +1,4 @@
-/* Copyright (C) 2023 anonymous
+/* Copyright (C) 2023-2024 anonymous
 
 This file is part of PSFree.
 
@@ -15,23 +15,28 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
-import { Int } from './int64.js';
+import { Int } from './int64.mjs';
 
-export function die(msg) {
-    alert(msg);
-    undefinedFunction();
+export class DieError extends Error {
+    constructor(...args) {
+        super(...args);
+        this.name = this.constructor.name;
+    }
 }
 
-export function debug_log(msg) {
-    let textNode = document.createTextNode(msg);
-    let node = document.createElement("p").appendChild(textNode);
-
-    document.body.appendChild(node);
-    document.body.appendChild(document.createElement("br"));
+export function die(msg='') {
+    throw new DieError(msg);
 }
+
+const console = document.getElementById('console');
+// export function debug_log(msg='') {
+//     console.append(msg + '\n');
+// }
+export const debug_log = print; 
+window.debug_log = debug_log;
 
 export function clear_log() {
-    document.body.innerHTML = null;
+    console.innerHTML = null;
 }
 
 export function str2array(str, length, offset) {
@@ -52,8 +57,8 @@ export function align(a, alignment) {
     }
     const mask = -alignment & 0xffffffff;
     let type = a.constructor;
-    let low = a.low() & mask;
-    return new type(low, a.high());
+    let low = a.low & mask;
+    return new type(low, a.high);
 }
 
 export async function send(url, buffer, file_name, onload=() => {}) {
@@ -72,4 +77,21 @@ export async function send(url, buffer, file_name, onload=() => {}) {
         throw Error(`Network response was not OK, status: ${response.status}`);
     }
     onload();
+}
+
+// mostly used to yield to the GC. marking is concurrent but collection isn't
+//
+// yielding also lets the DOM update. which is useful since we use the DOM for
+// logging and we loop when waiting for a collection to occur
+export function sleep(ms=0) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+export function hex(number) {
+    return '0x' + number.toString(16);
+}
+
+// no "0x" prefix
+export function hex_np(number) {
+    return number.toString(16);
 }

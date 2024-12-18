@@ -16,23 +16,34 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.  */
 
 // We can't just open a console on the ps4 browser, make sure the errors thrown
-// by our modules are alerted. We use alert() instead of debug_log() because
+// by our program are alerted. We use alert() instead of debug_log() because
 // while we are developing, we may modify the utils.mjs module and introduce
 // bugs. We can not use debug_log() if it throws an error.
-//
-// We added this new file instead of putting this on run.mjs, so we can ensure
-// we can attach this listener first before running anything.
-addEventListener('unhandledrejection', (event) => {
+
+// We log the line and column numbers as well since some exceptions (like
+// SyntaxError) do not show it in the stack trace.
+
+addEventListener('unhandledrejection', event => {
     const reason = event.reason;
-    // We log the line and column numbers as well since some exceptions (like
-    // SyntaxError) do not show it in the stack trace.
     alert(
-        `${reason}\n`
+        'Unhandled rejection\n'
+        + `${reason}\n`
         + `${reason.sourceURL}:${reason.line}:${reason.column}\n`
         + `${reason.stack}`
     );
-    throw reason;
 });
 
-// important that we dynamically import the exploit script after we attach
-import('./exploit.js');
+addEventListener('error', event => {
+    const reason = event.error;
+    alert(
+        'Unhandled error\n'
+        + `${reason}\n`
+        + `${reason.sourceURL}:${reason.line}:${reason.column}\n`
+        + `${reason.stack}`
+    );
+    return true;
+});
+
+// we have to dynamically import the program if we want to catch its syntax
+// errors
+import('./psfree.mjs');
