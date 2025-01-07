@@ -89,9 +89,9 @@ const payload_map = [
         description: "Uses john-tornblom's elfldr. Custom homebrew loader. Runs on port 8080.",
         fileName: "websrv.elf",
         author: "john-tornblom",
-        projectSource: "https://github.com/ps5-payload-dev/websrv/releases",
-        binarySource: "https://github.com/ps5-payload-dev/websrv/releases/download/v0.16/Payload.zip",
-        version: "0.16",
+        projectSource: "https://github.com/ps5-payload-dev/websrv",
+        binarySource: "https://github.com/ps5-payload-dev/websrv/releases/tag/v0.18",
+        version: "0.18",
         toPort: 9021
     },
     {
@@ -100,8 +100,8 @@ const payload_map = [
         fileName: "ftpsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/ftpsrv",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/12400108209",
-        version: "0.11",
+        binarySource: "https://github.com/ps5-payload-dev/ftpsrv/releases/tag/v0.11.1",
+        version: "0.11.1",
         toPort: 9021
     },
     {
@@ -109,9 +109,9 @@ const payload_map = [
         description: "Uses john-tornblom's elfldr. Klog server. Runs on port 3232.",
         fileName: "klogsrv.elf",
         author: "john-tornblom",
-        projectSource: "https://github.com/ps5-payload-dev/klogsrv/releases",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/12400108209",
-        version: "0.5",
+        projectSource: "https://github.com/ps5-payload-dev/klogsrv",
+        binarySource: "https://github.com/ps5-payload-dev/klogsrv/releases/tag/v0.5.1",
+        version: "0.5.1",
         toPort: 9021
     },
     {
@@ -119,9 +119,9 @@ const payload_map = [
         description: "Uses john-tornblom's elfldr. Telnet shell server. Runs on port 2323.",
         fileName: "shsrv.elf",
         author: "john-tornblom",
-        projectSource: "https://github.com/ps5-payload-dev/shsrv/releases",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/12400108209",
-        version: "0.12",
+        projectSource: "https://github.com/ps5-payload-dev/shsrv",
+        binarySource: "https://github.com/ps5-payload-dev/shsrv/releases/tag/v0.13",
+        version: "0.13",
         toPort: 9021
     },
     {
@@ -129,9 +129,9 @@ const payload_map = [
         description: "Uses john-tornblom's elfldr. GDB server. Runs on port 2159.",
         fileName: "gdbsrv.elf",
         author: "john-tornblom",
-        projectSource: "https://github.com/ps5-payload-dev/gdbsrv/releases",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/12400108209",
-        version: "0.4-1",
+        projectSource: "https://github.com/ps5-payload-dev/gdbsrv",
+        binarySource: "https://github.com/ps5-payload-dev/gdbsrv/releases/tag/v0.5",
+        version: "0.5",
         toPort: 9021
     },
     {
