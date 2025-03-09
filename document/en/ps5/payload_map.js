@@ -26,8 +26,8 @@ const payload_map = [
     //     fileName: "elfldr.elf",
     //     author: "john-tornblom",
     //     projectSource: "https://github.com/ps5-payload-dev/elfldr",
-    //     binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/12400108209",
-    //     version: "?",
+    //     binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
+    //     version: "0.18.1",
     //     supportedFirmwares: ["1.", "2.", "3.", "4.", "5."]
     // },
     // etaHEN is added twice so that on 1.xx-2.xx you can load it in webkit only mode too
@@ -90,8 +90,8 @@ const payload_map = [
         fileName: "websrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/websrv",
-        binarySource: "https://github.com/ps5-payload-dev/websrv/releases/tag/v0.18",
-        version: "0.18",
+        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
+        version: "0.20",
         toPort: 9021
     },
     {
@@ -100,8 +100,8 @@ const payload_map = [
         fileName: "ftpsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/ftpsrv",
-        binarySource: "https://github.com/ps5-payload-dev/ftpsrv/releases/tag/v0.11.1",
-        version: "0.11.1",
+        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
+        version: "0.11.2",
         toPort: 9021
     },
     {
@@ -110,8 +110,8 @@ const payload_map = [
         fileName: "klogsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/klogsrv",
-        binarySource: "https://github.com/ps5-payload-dev/klogsrv/releases/tag/v0.5.1",
-        version: "0.5.1",
+        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
+        version: "0.5.2",
         toPort: 9021
     },
     {
@@ -120,8 +120,8 @@ const payload_map = [
         fileName: "shsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/shsrv",
-        binarySource: "https://github.com/ps5-payload-dev/shsrv/releases/tag/v0.13",
-        version: "0.13",
+        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
+        version: "0.13.1",
         toPort: 9021
     },
     {
@@ -130,7 +130,7 @@ const payload_map = [
         fileName: "gdbsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/gdbsrv",
-        binarySource: "https://github.com/ps5-payload-dev/gdbsrv/releases/tag/v0.5",
+        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
         version: "0.5",
         toPort: 9021
     },
@@ -142,7 +142,7 @@ const payload_map = [
         projectSource: "https://github.com/GoldHEN/ps5debug",
         binarySource: "https://github.com/GoldHEN/ps5debug/releases/download/1.0b2/ps5debug_v1.0b2.elf",
         version: "1.0b2",
-        supportedFirmwares: ["3.", "4.", "5."],
+        supportedFirmwares: ["3.", "4."],
         toPort: 9021
     },
     {
@@ -152,7 +152,7 @@ const payload_map = [
         author: "Dizz, astrelsky, John Tornblom, SiSTR0, golden, idlesauce",
         projectSource: "https://github.com/idlesauce/ps5debug",
         binarySource: "https://github.com/idlesauce/ps5debug/releases/download/v0.0.1/ps5debug.elf",
-        version: "0.0.1",
+        version: "0.0.1-r2",
         toPort: 9021
     },
     {
@@ -171,8 +171,8 @@ const payload_map = [
         fileName: "rp-get-pin.elf",
         author: "idlesauce",
         projectSource: "https://github.com/idlesauce/ps5-remoteplay-get-pin",
-        binarySource: "https://github.com/idlesauce/ps5-remoteplay-get-pin/releases/tag/v0.1",
-        version: "0.1",
+        binarySource: "https://github.com/idlesauce/ps5-remoteplay-get-pin/releases/tag/v0.1.1",
+        version: "0.1.1",
         toPort: 9021
     },
     {
