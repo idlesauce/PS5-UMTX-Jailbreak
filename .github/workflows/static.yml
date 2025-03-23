@@ -29,7 +29,7 @@ jobs:
 
       - name: Run appcache_manifest_generator.py
         run: |
-          python appcache_manifest_generator.py -cf -d document/en/ps5
+          python appcache_manifest_generator.py -d document/en/ps5
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
