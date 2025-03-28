@@ -26,31 +26,18 @@ const payload_map = [
     //     fileName: "elfldr.elf",
     //     author: "john-tornblom",
     //     projectSource: "https://github.com/ps5-payload-dev/elfldr",
-    //     binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
-    //     version: "0.18.1",
+    //     binarySource: "https://github.com/ps5-payload-dev/elfldr/releases/download/v0.19/Payload.zip",
+    //     version: "0.19",
     //     supportedFirmwares: ["1.", "2.", "3.", "4.", "5."]
     // },
-    // etaHEN is added twice so that on 1.xx-2.xx you can load it in webkit only mode too
-    // but on 3.xx-4.xx it only shows in kernel exploit mode since it needs the 9020 elf loader for kstuff
     {
         displayTitle: "etaHEN",
         description: "AIO HEN",
-        fileName: "etaHEN.bin",
+        fileName: "etaHEN-2.0b.bin",
         author: "LightningMods, Buzzer, sleirsgoevy, ChendoChap, astrelsky, illusion, CTN, SiSTR0, Nomadic",
-        projectSource: "https://github.com/LightningMods/etaHEN",
-        binarySource: "https://github.com/LightningMods/etaHEN/releases/download/1.9b/etaHEN.bin",
-        version: "1.9b",
-        supportedFirmwares: ["3.", "4."]
-    },
-    {
-        displayTitle: "etaHEN",
-        description: "AIO HEN",
-        fileName: "etaHEN.bin",
-        author: "LightningMods, Buzzer, sleirsgoevy, ChendoChap, astrelsky, illusion, CTN, SiSTR0, Nomadic",
-        projectSource: "https://github.com/LightningMods/etaHEN",
-        binarySource: "https://github.com/LightningMods/etaHEN/releases/download/1.9b/etaHEN.bin",
-        version: "1.9b",
-        supportedFirmwares: ["1.", "2."],
+        projectSource: "https://github.com/etaHEN/etaHEN",
+        binarySource: "https://github.com/etaHEN/etaHEN/raw/178499a10cf268093b048079e803717195fcab19/etaHEN-2.0b.bin",
+        version: "2.0b",
         toPort: 9021
     },
     {
@@ -87,17 +74,17 @@ const payload_map = [
     },
     {
         displayTitle: "websrv",
-        description: "Uses john-tornblom's elfldr. Custom homebrew loader. Runs on port 8080.",
+        description: "Custom homebrew loader. Runs on port 8080.",
         fileName: "websrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/websrv",
-        binarySource: "https://github.com/ps5-payload-dev/pacbrew-repo/actions/runs/13686166926",
-        version: "0.20",
+        binarySource: "https://github.com/ps5-payload-dev/websrv/releases/download/v0.22/Payload.zip",
+        version: "0.22",
         toPort: 9021
     },
     {
         displayTitle: "ftpsrv",
-        description: "Uses john-tornblom's elfldr. FTP server. Runs on port 2121.",
+        description: "FTP server. Runs on port 2121.",
         fileName: "ftpsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/ftpsrv",
@@ -107,7 +94,7 @@ const payload_map = [
     },
     {
         displayTitle: "klogsrv",
-        description: "Uses john-tornblom's elfldr. Klog server. Runs on port 3232.",
+        description: "Klog server. Runs on port 3232.",
         fileName: "klogsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/klogsrv",
@@ -117,7 +104,7 @@ const payload_map = [
     },
     {
         displayTitle: "shsrv",
-        description: "Uses john-tornblom's elfldr. Telnet shell server. Runs on port 2323.",
+        description: "Telnet shell server. Runs on port 2323.",
         fileName: "shsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/shsrv",
@@ -127,7 +114,7 @@ const payload_map = [
     },
     {
         displayTitle: "gdbsrv",
-        description: "Uses john-tornblom's elfldr. GDB server. Runs on port 2159.",
+        description: "GDB server. Runs on port 2159.",
         fileName: "gdbsrv.elf",
         author: "john-tornblom",
         projectSource: "https://github.com/ps5-payload-dev/gdbsrv",
